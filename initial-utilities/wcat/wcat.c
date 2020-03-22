@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
 
 
 #define BUFFER_SIZE 256
@@ -39,11 +39,16 @@ void readFile(char *path)
 
 int main(int argc, char *argv[])
 {
+    clock_t begin = clock();
 
     for (int i = 1; i < argc; i++)
     {
         readFile(argv[i]);
     }
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("%.4f", time_spent);
 
     return 0;
 }
