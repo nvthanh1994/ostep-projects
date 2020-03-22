@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// The readFile func read file from provided path char by char
-// and print to stdout it's content
-// finally close the file
+
 
 #define BUFFER_SIZE 256
 char buffer[BUFFER_SIZE];
 
+// The readFile func read file from provided path char by char
+// and print to stdout it's content
+// finally close the file
 void readFile(char *path)
 {
     FILE *fp = fopen(path, "r");
     if (fp == NULL)
     {
         printf("my-cat: cannot open file\n");
-        return;
+        exit(1);
     }
     else
     {
