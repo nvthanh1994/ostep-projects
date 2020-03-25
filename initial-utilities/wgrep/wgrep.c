@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
 int get_length(char* term){
     int i = 0;
     while(term[i] != '\0'){
@@ -33,11 +31,10 @@ int find(char* line, char* term){
     return 0 ;
 }
 
-void grepFile(char* path, char* term)
-{
-    FILE *fp;
-    fp = fopen(path, "r");
 
+// Grep term from a File pointer
+void grepFile(FILE* fp, char* term)
+{
     if (fp == NULL)
     {
         printf("%s", "wgrep: cannot open file\n");
@@ -69,20 +66,25 @@ int main(int argc, char *argv[])
         printf("wgrep: searchterm [file ...]\n");
         exit(1);
     }
-    if (argc == 2)
+    else if (argc == 2)
     {
         char *term = argv[1];
         // Read from stdin 
+        // stdin already open as Unix standard 
+        // and its type is FILE*
         grepFile(stdin, term);
         exit(0);
     }
-
-    // File 
-    char *term = argv[1];
-    for (int i = 2; i < argc; i++)
-    {
-        grepFile(argv[i], term);
+    else{
+        // File 
+        char *term = argv[1];
+        for (int i = 2; i < argc; i++)
+        {
+            FILE* fp = fopen(argv[i], "r");
+            grepFile(fp, term);
+        }
     }
 
+    
     return 0;
 }
